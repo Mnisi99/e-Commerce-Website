@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+
+    <header id="nav-bar">
+        <div class="site-logo">
+            <img class="logo" src="images/sneakers.png" alt="">
+            <h1 class="logo-name">SNF</h1>
+        </div>
+       <div>
+            <input type="text" id="search" placeholder="search for your favourite sneaker"><img class="search-btn" src="images/magnifying-glass.png">
+            <img class="shop-crt" src="images/shopping-cart.png"><li class="num-Cart-Items"></li>
+       </div>
+    </header>
+    <div class="Cart">
+        <li class="exit">Close</li>
+        <h2>Cart Items</h2>
+        <p></p>
+        <div class="itemContainer"></div>
+    </div>
+
+    <div class="intro">
+        <h1 class="pretty">Welcome To Sneaker Factory</h1>
+
+        <div class="intro-message">
+            <p>
+                <span>Where every step starts with style, speed, and soul</span>. From the first stitch to the final stride, we craft sneakers that move the world. Whether you're chasing dreams, crushing goals, or just kicking back, we've got the perfect pair waiting for you. <span>Step in. Stand out. Stay unstoppable</span>.
+            </p>
+        </div>
+    </div>
+    <div class="container"></div>
+    <div class="modal-pop-up"></div>
+    
+    <footer>
+
+    </footer>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        
+       $(document).ready(function() {
+          
+            const $obj = [{
+            id: 101,
+            name: "Air force 1 '07",
+            size: [4, 5, 6, 7, 8, 9],
+            quantity: 14,
+            price: 2400,
+            image: 'images/peri-stojnic-r3rbIwZ9DJc-unsplash.jpg'
+           }, {
+            id: 102,
+            name: 'Air Jordan MVP',
+            size: [4, 5, 6, 7, 8, 9],
+            quantity: 20,
+            price: 3500,
+            image: 'images/denis-marosan-q35zYDIJSjo-unsplash.jpg'
+           }, {
+            id: 103,
+            name: 'Air Jordan 1 Mid',
+            size: [4, 5, 6, 7, 8, 9],
+            quantity: 10,
+            price: 2000,
+            image: 'images/ox-street-BWPqHZBhMVA-unsplash.jpg'
+           }, {
+            id: 104,
+            name: 'Converse',
+            size: [6, 7, 8, 9],
+            quantity: 6,
+            price: 1500,
+            image: 'images/apostolos-vamvouras-YQbJLyY0hFU-unsplash.jpg'
+           },{
+            id: 105,
+            name: 'Nike Flex Experience Run 12',
+            size: [4, 5, 8, 9],
+            quantity: 12,
+            price: 2400,
+            image: 'images/imani-bahati-LxVxPA1LOVM-unsplash.jpg'
+           }, {
+            id: 106,
+            name: 'Air Force 1 Boot',
+            size: [4, 5, 6, 7, 8, 9],
+            quantity: 20,
+            price: 3500,
+            image: 'images/xavier-teo-SxAXphIPWeg-unsplash.jpg'
+           }, {
+            id: 107,
+            name: 'New Balance X-90',
+            size: [4, 5, 6, 7, 8, 9],
+            quantity: 10,
+            price: 2000,
+            image: 'images/maksim-larin-ezdrvzA1hZw-unsplash.jpg'
+           }, {
+            id: 108,
+            name: 'Nike Free RN',
+            size: [3, 5, 6, 7, 8, 9],
+            quantity: 6,
+            price: 1500,
+            image: 'images/domino-studio-164_6wVEHfI-unsplash.jpg'
+           }]
+
+            const $modalPop = $('.modal-pop-up');
+            const $cont = $('.container');
+            const $intro = $('.intro');
+            const $cart = $('.Cart');
+
+            const formatter = new Intl.NumberFormat('en-ZA', {
+                style: 'currency',
+                currency: 'ZAR'
+            });
+
+            function showProducts(data) {
+                return `
+                    <div> 
+                        <img src="${data.image}">
+                        <h2>${data.name}</h2> 
+                        <ul> 
+                            <li><span>Quantity:</span> ${data.quantity}</li>
+                            <li><span>Price:</span>${formatter.format(data.price)}</li> 
+                        </ul>
+                    </div>
+                `;
+            }
+            function showModalPop(data) {
+                return `
+                    <h3>< previous page</h3>
+                    <p></p>
+                    <div>
+                            <img src="${data.image}">
+                            <h2>${data.name}</h2>
+                      
+                            <ul>    
+                                <li>${formatter.format(data.price)}</li>
+                                <li>
+                                    <p>
+                                        Or 6 months payments of ${formatter.format(data.price / 6)} at 0% interest.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p> 
+                                        <img src="images/delivery-truck.png">
+                                    </p>
+                                    <span>Free delivery</span>
+                                </li>
+                                <li>
+                                    Sizes:
+                                    <ul></ul>
+                                </li>
+                                <li>
+                                    <em></em>
+                                </li>
+                                <li>
+                                    <button>Add to cart</button>
+                                </li>
+                                
+                            </ul>
+                        </div>`;
+            }
+
+            function showCartItems(item) {
+                return `
+                    <div>
+                        <h3>${item.itemName}</h3>
+                        <img src="${item.itemImage}">
+                        <ul>
+                            <li>Size: <span>${item.itemSize}</span></li>
+                            <li>Quantity: ${item.itemQuantity}</li>
+                            <li>Price: ${formatter.format(item.itemPrice)}</li>
+                        </ul>
+                    </div>
+                `;
+            }
+
+            $obj.forEach( function(data) {
+                    
+                $cont.append(showProducts(data));
+
+            });
+            
+            const cartItems = [];
+            const $inputVal = $('input');
+
+            function searchItem(searchItem, items) {
+
+                items.forEach(item => {
+                    if (item.name.toLowerCase() == searchItem.val().trim().toLowerCase()) {
+                        $intro.hide();
+                        $modalPop.fadeOut(1000);
+                        $cont.html(showProducts(item)); 
+                        
+                        setTimeout(() => {
+                            searchItem.val('');
+                        }, 1000);
+                    } 
+                });
+
+                //TODO: FIND ANOTHER WAY THAT WILL ACCOMMODATE MULTIPLE ITEMS THAT ARE FOUND FROM A SEARCH!!
+            }
+            
+            function addCartItems(allItems, addedItems, size) {
+                            
+                    allItems.forEach(item => {
+                    let isDuplicate = false;
+                    let $existingElement = null;
+
+                    // Check all items already in the cart
+                    addedItems.each(function() {
+                        const existingSize = $(this).find(size).text();
+                        const existingImage = $(this).find('img').attr('src');
+
+                        if (item.itemSize === existingSize && item.itemImage === existingImage) {
+                            isDuplicate = true;
+                            $existingElement = $(this);
+                            return false; // break out of .each loop
+                        }
+                    });
+
+                    if (!isDuplicate) {
+                        // Append new item
+                        $('.Cart .itemContainer').append(showCartItems(item));
+                    } else {
+                        // Update quantity for existing item
+                        $existingElement.find('li:contains("Quantity")').text(`Quantity: ${item.itemQuantity}`);
+                    }
+                });
+            }
+
+            $('#nav-bar input + img').on('click', () => {
+                searchItem($inputVal, $obj);
+            });
+          
+           $cont.on('click', 'div', function() {
+            
+                const $myBox = $(this);
+                
+                $obj.find(data => {
+
+                    if (data.image === $myBox.children('img').attr('src')) {
+                        $intro.hide();
+                        $cont.hide();
+                        $modalPop.html(showModalPop(data));
+
+                        data.size.forEach(siz => {
+                            $('.modal-pop-up li ul:last-child').append(`<li>${siz}</li>`)
+                            .css({
+                                display: 'flex',
+                                marginLeft: '-33.8em',
+                                marginTop: '9em',
+                                fontWeight: '400'
+                            });
+
+                            $('.modal-pop-up li ul li').css({
+                                marginRight: '1em',
+                                padding: '1em',
+                                border: '.1em solid #000'
+                            });
+                        });
+
+                        let selectedSize = null;
+
+                       $('.modal-pop-up li ul li').on('click', function() {
+                        // This event is responsible for getting the size of the shoe when a size is clicked...
+                            selectedSize = $(this).text();
+
+                        });
+
+                        let sum = 0;
+
+                        $('.modal-pop-up li button').on('click', function() {
+
+                            if(!selectedSize) {
+                                return ($('.modal-pop-up li em').text('Please select a size').css('color', 'red'),
+                                setTimeout(function() {
+                                    $('.modal-pop-up li em').text('');
+                                }, 3000));
+                            }
+
+                            const existingItem = cartItems.find(item => item.itemId === data.id && item.itemSize === selectedSize );
+
+                            if(existingItem) {
+                                existingItem.itemQuantity += 1;
+                                existingItem.itemPrice = data.price * existingItem.itemQuantity;
+                            } else {
+                                cartItems.push({
+                                    itemId: data.id,
+                                    itemName: data.name,
+                                    itemSize: selectedSize,
+                                    itemPrice: data.price,
+                                    itemImage: data.image,
+                                    itemQuantity: 1
+                                });
+
+                                if (cartItems) {
+                                    $('.modal-pop-up h3 + p').text('Item added successfully to cart...').css('color', 'green');
+                                    setTimeout(function() {
+                                        $('.modal-pop-up h3 + p').text('');
+                                    }, 2000);
+                                }
+
+                                $('.num-Cart-Items').text(`${cartItems.length}`);
+                            }
+
+                            const $itemCheck = $('.Cart .itemContainer div');
+                            const $sizeCheck = $('ul li span');
+
+                            addCartItems(cartItems, $itemCheck, $sizeCheck);
+                            
+                        });
+                       
+                        $modalPop.fadeIn(2000);
+                    }
+
+                });
+
+                $('.modal-pop-up li ul li').on('click', function() {
+            
+                   $(this).css({
+                        backgroundColor: '#000',
+                        color: '#fff'
+                    });
+
+                    $(this).siblings().css({
+                        backgroundColor: '#fff',
+                        color: '#000'
+                    });
+
+                });
+
+           }); 
+           
+
+           $('.site-logo').on('click', () => {
+                location.reload();
+           });
+
+           $modalPop.on('click', 'h3', function() {
+               $modalPop.fadeOut(2000);
+                $intro.slideDown(2000);
+                $cont.slideDown(2000);
+           });
+
+
+           $('.shop-crt').on('click', function() {
+
+                if (cartItems.length === 0) {
+                    $('.Cart p').text('no items added to the cart !!');
+                    $('.Cart').addClass('reSizeCart');
+                } else {
+                    $('.Cart').toggleClass('reSizeCart', false);
+                    $('.Cart p').text('');
+                }
+
+                $cart.show();
+            });
+
+           
+           $('.exit').on('click', function() {
+                $('.Cart').hide();
+           });
+
+
+
+
+       });
+
+    </script>
+</body>
+</html>
