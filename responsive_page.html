@@ -370,7 +370,10 @@
            $('.shop-crt').on('click', function() {
 
                 if (cartItems.length === 0) {
-                    $('.Cart p').text('no items added to the cart !!');
+                    $('.Cart p').text('Cart empty').css({
+                        width: '25%',
+                        margin: '5em auto'
+                    });
                     $('.Cart').addClass('reSizeCart');
                 } else {
                     $('.Cart').toggleClass('reSizeCart', false);
@@ -384,9 +387,6 @@
            $('.exit').on('click', function() {
                 $('.Cart').hide();
            });
-
-
-
 
        });
 
