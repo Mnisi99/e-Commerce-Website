@@ -209,8 +209,10 @@
 
             function searchItem(searchItem, items) {
 
+                const searchValue = searchItem.val().trim();
+
                 items.forEach(item => {
-                    if (item.name.toLowerCase() == searchItem.val().trim().toLowerCase()) {
+                    if (item.name.toLowerCase() == searchValue.toLowerCase()) {
                         $intro.hide();
                         $modalPop.fadeOut(1000);
                         $cont.html(showProducts(item)); 
