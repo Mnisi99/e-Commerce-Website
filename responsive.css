@@ -249,6 +249,28 @@ header {
     border-radius: .5em;
 }
 
+.cartTotal {
+    list-style: none;
+    margin: 2em 2.3em;
+}
+
+.check-out-Btn {
+    display: block;
+    cursor: pointer;
+    border: .1em solid #b1afaf;
+    width: 80%;
+    height: 5em;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    font-size: 1em;
+    background-color: #1936da;
+    color: #fff;
+}
+
+.check-out-Btn:hover {
+    background-color: rgba(14, 28, 226, 0.6);
+}
+
 .itemContainer div ul {
     position: absolute;
     list-style: none;
